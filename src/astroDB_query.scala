@@ -66,5 +66,8 @@ object astroDB_query {
     new read_template_table(sc,sqlContext).readFromLocal(tempTablePath,sliceNum)
     val qEngine = new query_engine(sc, sqlContext)
     qEngine.runUserQuery(queryName, queryParam,sliceNum,outputPath,fromSource,starTablePath,starClusterNum)
+
+
+
  }
 }

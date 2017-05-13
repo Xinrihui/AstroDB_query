@@ -6,6 +6,7 @@ import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.sql.types._
+import com.redislabs.provider.redis._
 
 import scala.io.Source
 
@@ -98,5 +99,31 @@ class read_template_table(sc : SparkContext, sqlContext: SQLContext) {
     sqlContext.createDataFrame(storeRDDRow,tableStruct).cache().registerTempTable("template")
 //    val b = sqlContext.sql("select * from template").count()
 }
+
+
+  def readFromRedis(prefix_template_table : String,redisSliceNum:Int,ccd_array:Array[Int]): Unit =
+  {
+
+      ccd_array.foreach {CCDNum =>
+
+      val keypattern = s"${prefix_template_table}_${CCDNum}_*"
+
+      //    val template_table_Keys = sc.fromRedisKeyPattern(keypattern,redisSliceNum).collect()
+      //
+      //    val num_template_table=template_table_Keys.length
+      //
+      //
+      //
+      //    if (template_table_Keys == null)
+      //    {
+      //      sys.error("Key list is null")
+      //    }
+
+      val qEngine = new query_engine_v2(sc, sqlContext)
+      qEngine.readFromRedis_basic_time_spatial_index(keypattern)
+    }
+
+
+  }
 
 }

@@ -324,4 +324,11 @@ var templateResult = sqlContext.emptyDataFrame
       ))
     sqlContext.createDataFrame(listRDDRow,tableStruct).registerTempTable(tableName)
   }
+
+
+
+
+
+
+
 }
